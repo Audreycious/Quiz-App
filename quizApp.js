@@ -11,34 +11,46 @@
 
 // A function that renders
 
-// <!-- View 1 for starting Page -->
+// View 0 for starting Page
 
-// // <div class="view0">
-// //     <div id='welcomePicture'>
-// //         <img src="https://longdonclub.co.uk/wp/wp-content/uploads/2017/12/Quiz@Kvarteret-e1518802228786.png"
-// //             alt='Unable to Load Image'></img>
-// //     </div>
-// {/* <button id="quizBtn">Start Quiz</button> */}
-// // </div>
+const STORE = [
+    {question: 'blah1', answer: 'blah1'},
+    {question: 'blah1', answer: 'blah1'},
+    {question: 'blah1', answer: 'blah1'},
+    {question: 'blah1', answer: 'blah1'},
+    {question: 'blah1', answer: 'blah1'},
+    {question: 'blah1', answer: 'blah1'},
+    {question: 'blah1', answer: 'blah1'},
+    {question: 'blah1', answer: 'blah1'},
+    {question: 'blah1', answer: 'blah1'},
+    {question: 'blah1', answer: 'blah1'}];
+
+<div class="view0" role="LandingPage">
+    <div id='welcomePicture'>
+         <img src="https://longdonclub.co.uk/wp/wp-content/uploads/2017/12/Quiz@Kvarteret-e1518802228786.png"
+           alt="An image welcoming you to the quiz!"></img>
+     </div>
+ <button id="quizBtn">Start Quiz</button>
+ </div>
         
-// // /* <!-- View 2 for Question Page --> */
-// //         <div class="view2" role="QuestionPage">
-// //             <div class="questionPanel">
+//  View 1 for Question Page
+<div class="view1" role="QuestionPage">
+    <div class="questionPanel">
+    {/*  The question input from the object goes here e.g. obj.question1 */}
+    </div>
+    <div class="answerPanel">
+    {/* The form with the answer inputs from the object goes here e.g. arr. */}
+    </div>
+    <button id="quizBtn">Start Quiz</button>
+</div>
 
-// //             </div>
-// //             <div class="answerPanel">
+View 3 for Response Page 
+<div class="view3" role="ResponsePage">
+    <div class="responsePanel">
 
-// //             </div>
-// {/* <button id="quizBtn">Start Quiz</button> */}
-// //         </div>
-
-// // /* <!-- View 3 for Response Page --> */
-// //         <div class="view3" role="ResponsePage">
-// //             <div class="responsePanel">
-
-// //             </div>
-// //             <div class="correctAnsPanel">
-//https://www.google.com/search?q=thumbs+up&rlz=1C1CHBF_enUS842US842&source=lnms&tbm=isch&sa=X&ved=0ahUKEwjNue3K4rfhAhUFnKwKHeLsAkUQ_AUIDigB&biw=1707&bih=778&dpr=1.5#imgrc=RQajt-rDHysSWM:
-// //             </div>
-// {/* <button id="quizBtn">Start Quiz</button> */}
-// //         </div>
+    </div>
+    <div class="correctAnsPanel">
+        {/* https://www.google.com/search?q=thumbs+up&rlz=1C1CHBF_enUS842US842&source=lnms&tbm=isch&sa=X&ved=0ahUKEwjNue3K4rfhAhUFnKwKHeLsAkUQ_AUIDigB&biw=1707&bih=778&dpr=1.5#imgrc=RQajt-rDHysSWM: */}
+            </div>
+    <button id="quizBtn">Start Quiz</button>
+        </div>
