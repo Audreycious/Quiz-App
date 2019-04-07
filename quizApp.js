@@ -1,6 +1,6 @@
 
 const STORE = {
-    info: { currentView: 0, questionNum: -1, currentCorrectAnswer: '', isCorrect: false, totalCorrect: 0, totalNumQuestions: 10 },
+    info: { currentView: 0, questionNum: -1, currentCorrectAns: '', isCorrect: false, totalCorrect: 0, totalNumQuestions: 10 },
     
     questions: [
         { question: 'blah1', answer: ['blah1', 'blah2', 'blah3', 'blah4'], correct: 'blah1' },
@@ -31,15 +31,15 @@ const STORE = {
             <div id="questionPanel">
             ${STORE.questions[questionNum].question}` // The question input from the correct object in the STORE goes here
             + `</div>
-            <div id="answerPanel">`  // The answer array from the correct object in the STORE displays in the answer form here
-            + `<form action="" method="post"> 
-                    <input type="radio" name="quizAns" id="1stRadioAnswer" value="1stRadioAnswer" /><label for="1stRadioAnswer">
+            <div id="ansPanel">`  // The answer array from the correct object in the STORE displays in the answer form here
+            + `<form id='ansForm' action="" method="get"> 
+                    <input type="radio" name="quizAns" id="1stRadioAns" /><label for="1stRadioAns">
                     ${STORE.questions[questionNum].answer[0]}</label>
-                    <input type="radio" name="quizAns" id="2ndRadioAnswer" value="2ndRadioAnswer"  /><label for="2ndRadioAnswer">
+                    <input type="radio" name="quizAns" id="2ndRadioAns" /><label for="2ndRadioAns">
                     ${STORE.questions[questionNum].answer[1]}</label>
-                    <input type="radio" name="quizAns" id="3rdRadioAnswer" value="3rdRadioAnswer" /><label for="3rdRadioAnswer">
+                    <input type="radio" name="quizAns" id="3rdRadioAns" /><label for="3rdRadioAns">
                     ${STORE.questions[questionNum].answer[2]}</label>
-                    <input type="radio" name="quizAns" id="4rdRadioAnswer" value="4rdRadioAnswer" /><label for="4rdRadioAnswer">
+                    <input type="radio" name="quizAns" id="4rdRadioAns" /><label for="4rdRadioAns">
                     ${STORE.questions[questionNum].answer[3]}</label><
                 </form>
             </div>
@@ -59,7 +59,7 @@ const STORE = {
             <div id="responsePanel">Wrong!</div>
             <div id="correctAnsPanel">
                 <p>The correct answer is:</p>
-                <p id="correctAnsDisplay>${STORE.info.currentCorrectAnswer}</p>
+                <p id="correctAnsDisplay>${STORE.info.currentCorrectAns}</p>
             `}
             <div id='scoreDisplay'>
                 <p>Your current score is:</p>
@@ -82,25 +82,39 @@ const STORE = {
 // event delegator
 function handleBtnClicks() {
     $('#renderThis').on('click', '#quizBtn', function () {
-        
-        decideView(btnClass, correctAns);
-        return true;
+        iHaveAllTheAnswers();
+        const btnClass = findBtnClass();
+        decideView(btnClass);
+        renderView();
+        return;
     })
 };
+
+// A function that returns the button class
+    function findBtnClass() {
+        return this.attr('class');
+    };
 
 // A function that checks which answer was selected
 //      then cascades into checkAns() to update the STORE then end 
 // output = updated STORE
-    // function iHaveAllTheAnswers() {
-    //     if ($('#quizB
-    //     const ansSelected = 
-    // };
+    function iHaveAllTheAnswers() {
+        if (STORE.info.currentView === 1) {
+            const ansSelected = $('input[name=quizAns]:checked label').text();
+            console.log(ansSelected);
+            const currentQuestionNum = handleQuestionNum();
+            const correctAns = STORE.questions[currentQuestionNum].correct;
+            return checkAns(ansSelected, correctAns);
+        };
+        throw console.error('WRONG VIEW!');
+    };
 
 // A function that checks if the answer is right, updates the store, returns true/false
 // 1st arg = answer selected
-// output = true/false   
+
     function checkAns(ansSelected, correctAns) {
-        
+        STORE.info.isCorrect = (ansSelected === correctAns);
+        return STORE.info.isCorrect;
     };
 
 // A function that decides which view to change to
@@ -109,32 +123,37 @@ function handleBtnClicks() {
     function decideView(btnClass) {
         if (btnClass === 'startQ') {
             STORE.info.currentView = 'view1';
+            return;
         }
 
         else if (btnClass === 'submit') {
             STORE.info.currentView = 'view2';
+            return;
         }
 
         else if (btnClass === 'next') {
             STORE.info.currentView = 'view3';
+            return;
         }
 
         else if (btnClass === 'startAgain') {
             STORE.info.currentView = 'view1';
+            return;
         };
+        throw console.error('THE VIEW IS MESSED UP');
     };
 
 // A function that adds to the questionNum
 // output = new questionNum
     function handleQuestionNum() {
-        STORE.info.questionNum++;
-        return STORE.info.questionNum;
+        return STORE.info.questionNum++;
     };
 
 // A function that renders the entire area of #renderThis
-// function render(currentView) {
-//     const currentView = STORE.
-// };
-//     $('#renderThis').html(
-// }
-// Find the STORE entry with id = info, then return the value of that obj.currentView, then use that value to update the view to that view
+    function renderView() {
+        let currentView = STORE.info.currentView;
+        $('#renderThis').html(STORE.view[currentView]);
+    };
+
+renderView();
+handleBtnClicks();
