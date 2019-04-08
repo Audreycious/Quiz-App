@@ -20,11 +20,13 @@ const STORE = {
 // A function that listens for button clicks in the div#renderThis
 // event delegator
 function handleBtnClicks() {
-    $('#renderThis').on('click', '#quizBtn', function (e) {
-        iHaveAllTheAnswers();
+    $('#renderThis').on('click', '#quizBtn', function () {
+        let currentQuestionNum = STORE.info.questionNum;
+        const questionObj = STORE.questions[currentQuestionNum];
+        iHaveAllTheAnswers(questionObj, currentQuestionNum);
         let btnClass = this.attr('class');
         let newView = decideView(btnClass);
-        renderView(newView);
+        renderView(newView, currentQuestionNum);
     })
 };
 
@@ -36,25 +38,26 @@ function handleBtnClicks() {
 // A function that checks which answer was selected
 //      then cascades into checkAns() to update the STORE then end 
 // output = updated STORE
-    function iHaveAllTheAnswers() {
+    function iHaveAllTheAnswers(questionObj, currentQuestionNum) {
         if (STORE.info.currentView === 1) {
             const ansSelected = $('input[name=quizAns]:checked label').text();
             console.log(ansSelected);
-            const currentQuestionNum = handleQuestionNum();
-            const correctAns = STORE.questions[currentQuestionNum].correct;
-            return checkAns(ansSelected, correctAns)}
-        
-        else {
-            return;
-        };
+            const correctAns = questionObj.correct;
+            checkAns(ansSelected, correctAns);
+            handleQuestionNum(currentQuestionNum);
+        }
+        return;
     };
 
 // A function that checks if the answer is right, updates the store, returns true/false
-// 1st arg = answer selected
+// 1st arg = answer selected 2nd arg = correct answer
 
     function checkAns(ansSelected, correctAns) {
         STORE.info.isCorrect = (ansSelected === correctAns);
-        return STORE.info.isCorrect;
+        if (STORE.info.isCorrect) {
+            STORE.info.totalCorrect++;
+        }
+        return;
     };
 
 // A function that decides which view to change to
@@ -85,21 +88,27 @@ function handleBtnClicks() {
 
 // A function that adds to the questionNum
 // output = new questionNum
-function handleQuestionNum() { // SEND currentQuestionNum TO THIS FUNC
+function handleQuestionNum(currentQuestionNum) {
     console.log('`handleQuestionNum` ran');
-    const currentQuestionNum = STORE.info.questionNum;
-    if (currentQuestionNum === 10) {
-        currentQuestionNum === 0;
-    };
-    return STORE.info.questionNum++; 
+    if (currentQuestionNum === 9) {
+        currentQuestionNum === -1;
+        STORE.info.totalCorrect = 0;
+    }
+    currentQuestionNum++;
+    return;
 }; 
 
 // A function which generates the view
-function generateView(newView) { // needs questionNum
-    handleQuestionNum()
-    const currentQuestion = STORE.questions[questionNum].question;
-    const answerKey = STORE.questions[questionNum].answer;
-    const correctAns = STORE.questions[questionNum].correct;
+function generateView(newView, currentQuestionNum) {
+    if (currentQuestionNum >= 0) {
+        const currentQuestion = STORE.questions[(currentQuestionNum -1)].question;
+        const answerKey = STORE.questions[(currentQuestionNum -1)].answer;
+        const correctAns = STORE.questions[(currentQuestionNum -1)].correct;
+        const isCorrect = STORE.info.isCorrect;
+        const totalCorrect = STORE.info.totalCorrect;
+        const totalNumQuestions = STORE.info.totalNumQuestions;
+    }
+    // Should I change this into individual views with variable inputs?******
     const view = [// View 0 for Landing Page
         `
         div id="view0" role="LandingPage">
@@ -119,9 +128,9 @@ function generateView(newView) { // needs questionNum
             <div id="ansPanel">`  // The answer array from the correct object in the STORE displays in the answer form here
             + `<form id='ansForm' action="" method="get"> 
                     <input type="radio" name="quizAns" id="1stRadioAns" /><label for="1stRadioAns">${answerKey[0]}</label>
-                    <input type="radio" name="quizAns" id="2ndRadioAns" /><label for="2ndRadioAns">${currentQuestion.answer[1]}</label>
-                    <input type="radio" name="quizAns" id="3rdRadioAns" /><label for="3rdRadioAns">${currentQuestion.answer[2]}</label>
-                    <input type="radio" name="quizAns" id="4rdRadioAns" /><label for="4rdRadioAns">${currentQuestion.answer[3]}</label>
+                    <input type="radio" name="quizAns" id="2ndRadioAns" /><label for="2ndRadioAns">${answerKey[1]}</label>
+                    <input type="radio" name="quizAns" id="3rdRadioAns" /><label for="3rdRadioAns">${answerKey[2]}</label>
+                    <input type="radio" name="quizAns" id="4rdRadioAns" /><label for="4rdRadioAns">${answerKey[3]}</label>
                 </form>
             </div>
             <button id="quizBtn" class='submit'>Submit</button>
@@ -131,7 +140,7 @@ function generateView(newView) { // needs questionNum
         // View 2 for Response Page 
         `
         <div id="view2" role="ResponsePage">
-            ${STORE.info.isCorrect ? `
+            ${isCorrect ? `
             <div id="responsePanel">Correct!</div>
             <div id="correctAnsPanel">
                 <img src='https://www.google.com/search?q=thumbs+up&rlz=1C1CHBF_enUS842US842&source=lnms&tbm=isch&sa=X&ved=0ahUKEwjNue3K4rfhAhUFnKwKHeLsAkUQ_AUIDigB&biw=1707&bih=778&dpr=1.5#imgrc=RQajt-rDHysSWM:' alt='a thumbs up because you are right!'>`
@@ -140,11 +149,11 @@ function generateView(newView) { // needs questionNum
             <div id="responsePanel">Wrong!</div>
             <div id="correctAnsPanel">
                 <p>The correct answer is:</p>
-                <p id="correctAnsDisplay>${STORE.info.currentCorrectAns}</p>
+                <p id="correctAnsDisplay>${correctAns}</p>
             `}
             <div id='scoreDisplay'>
                 <p>Your current score is:</p>
-                <p id='currentScoreDisplay'>${STORE.info.totalCorrect} / ${STORE.info.questionNum}</p>
+                <p id='currentScoreDisplay'>${totalCorrect} / ${(currentQuestionNum -1)}</p>
             <button id="quizBtn" class='next'>Next</button>
         `,
 
@@ -152,25 +161,20 @@ function generateView(newView) { // needs questionNum
         `
         <div id="view3" role="FinalScorePage">
             <p>Your FINAL score is:</p>
-            <p id='finalScoreDisplay'>${STORE.info.totalCorrect} / ${STORE.info.totalNumQuestions}</p>
+            <p id='finalScoreDisplay'>${totalCorrect} / ${totalNumQuestions}</p>
         </div>
         <button id="quizBtn" class='startAgain'>Start again?</button>
         `];
     console.log('`generateView` ran');
-    // const currentView = STORE.info.currentView; HAVE THIS AREA UPDATED TO NEW VIEW OUTPUT
-    // return STORE.view[currentView];
-
-// A function that renders the entire area of #renderThis
-    function renderView(newView) { // also needs variable of questions, array of answers, isCorrect, currentCorrectAns, totalCorrect, questionNum, totalNumQuestions
-        $('#renderThis').html(STORE.view[newView]);
+    return view[newView];
     };
 
 // A function that renders the entire area of #renderThis
-function renderView(view) { //somehow make the view start with 0 here, use the variable
+function renderView(newView, currentQuestionNum) {
     console.log('`renderView` ran');
-    const viewString = generateView(view);
+    const viewString = generateView(newView, currentQuestionNum);
     $('#renderThis').html(viewString);
-
+    };
 
 
 // A function that sets the number of questions in STORE.info
@@ -184,5 +188,5 @@ function renderView(view) { //somehow make the view start with 0 here, use the v
 
 
 setTotalNumQuestions(); // Protects future expansion of the question block
-renderView(0);
+renderView(0, -1);
 handleBtnClicks();
