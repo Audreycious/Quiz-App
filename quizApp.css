@@ -4,7 +4,7 @@
     padding: 0;
 }
 
-body {
+main {
     overflow: hidden;
     box-sizing: border-box;
 }
@@ -13,16 +13,22 @@ body {
     display: flex;
 }
 
-header {
+.col {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     position: relative;
+}
+
+header {
     background-color: #fd59ef;
     height: 10vh;
 }
 
 h1 {
-    position: absolute;
-    top: 50%;
-    transform: translate(0, -50%);
+    padding-top: 2.5vh;
     color: rgb(0,54,54);
     font-size: 28pt;
     height: 5vh;
@@ -30,18 +36,19 @@ h1 {
 }
 
 #renderThis {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
     border: black 1px solid;
-    margin: 28vh;
-}
-
-.col {
-    justify-content: center;
-    flex: 1;
-    flex-direction: column;
+    width: 600px;
+    height: auto;
 }
 
 /* media views */
 /* @media (max-width: 400px) {
+    header {
+
+    }
     .flexbox {
         display: block;
         flex-wrap: wrap;
