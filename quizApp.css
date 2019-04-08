@@ -1,16 +1,49 @@
-html header {
+* {
+    height: 100%;
     margin: 0;
     padding: 0;
 }
+
+body {
+    overflow: hidden;
+    box-sizing: border-box;
+}
+
+.flexbox {
+    display: flex;
+}
+
 header {
-    position: fixed;
-    width: 100%;
+    position: relative;
     background-color: #fd59ef;
+    height: 10vh;
 }
 
 h1 {
+    position: absolute;
+    top: 50%;
+    transform: translate(0, -50%);
     color: rgb(0,54,54);
-    width: 100%;
-    padding-left: auto;
-    padding-right: auto;
+    font-size: 28pt;
+    height: 5vh;
+    text-align: center; 
 }
+
+#renderThis {
+    border: black 1px solid;
+    margin: 28vh;
+}
+
+.col {
+    justify-content: center;
+    flex: 1;
+    flex-direction: column;
+}
+
+/* media views */
+/* @media (max-width: 400px) {
+    .flexbox {
+        display: block;
+        flex-wrap: wrap;
+    }
+} */

@@ -87,16 +87,20 @@ function handleBtnClicks() {
 
 // A function that adds to the questionNum
 // output = new questionNum
-    function handleQuestionNum() {
+    function handleQuestionNum() { // SEND currentQuestionNum TO THIS FUNC
         console.log('`handleQuestionNum` ran');
-        return STORE.info.questionNum++;
+        const currentQuestionNum = STORE.info.questionNum;
+        if (currentQuestionNum === 10) {
+            currentQuestionNum === 0;
+        };
+        return STORE.info.questionNum++; 
     };
 
 // A function which generates the view
-    function generateView() {
-        const currentView = STORE.info.currentView;
+    function generateView(newView) {
+        handleQuestionNum()
         const currentQuestion = STORE.questions[questionNum].question;
-        const answerKey = STORE.questions[currentView].map // USE THIS ARE TO MAP OUT THE NEW VIEW
+        const answerKey = STORE.questions[currentQuestion].
 
         const view = [// View 0 for Landing Page
             `
@@ -116,10 +120,10 @@ function handleBtnClicks() {
                 + `</div>
                 <div id="ansPanel">`  // The answer array from the correct object in the STORE displays in the answer form here
                 + `<form id='ansForm' action="" method="get"> 
-                        <input type="radio" name="quizAns" id="1stRadioAns" /><label for="1stRadioAns">${STORE.questions[questionNum].answer[0]}</label>
-                        <input type="radio" name="quizAns" id="2ndRadioAns" /><label for="2ndRadioAns">${STORE.questions[questionNum].answer[1]}</label>
-                        <input type="radio" name="quizAns" id="3rdRadioAns" /><label for="3rdRadioAns">${STORE.questions[questionNum].answer[2]}</label>
-                        <input type="radio" name="quizAns" id="4rdRadioAns" /><label for="4rdRadioAns">${STORE.questions[questionNum].answer[3]}</label>
+                        <input type="radio" name="quizAns" id="1stRadioAns" /><label for="1stRadioAns">${currentQuestion.answer[0]}</label>
+                        <input type="radio" name="quizAns" id="2ndRadioAns" /><label for="2ndRadioAns">${currentQuestion.answer[1]}</label>
+                        <input type="radio" name="quizAns" id="3rdRadioAns" /><label for="3rdRadioAns">${currentQuestion.answer[2]}</label>
+                        <input type="radio" name="quizAns" id="4rdRadioAns" /><label for="4rdRadioAns">${currentQuestion.answer[3]}</label>
                     </form>
                 </div>
                 <button id="quizBtn" class='submit'>Submit</button>
@@ -157,14 +161,17 @@ function handleBtnClicks() {
         console.log('`generateView` ran');
         // const currentView = STORE.info.currentView; HAVE THIS AREA UPDATED TO NEW VIEW OUTPUT
         // return STORE.view[currentView];
-    }
+    };
 // A function that renders the entire area of #renderThis
     function renderView(view) { //somehow make the view start with 0 here, use the variable
         console.log('`renderView` ran');
-        const viewString = generateView();
+        const viewString = generateView(view);
         $('#renderThis').html(viewString);
         return;
     };
 
 renderView(0);
 handleBtnClicks();
+
+
+// const currentView = STORE.info.currentView;
