@@ -28,7 +28,7 @@ function handleBtnClicks() {
             questionObj = STORE.questions[currentQuestionNum];
             iHaveAllTheAnswers(questionObj);
         }
-        let btnClass = this.attr('class');
+        let btnClass = $(this).attr('class');
         decideView(btnClass);
         renderView();
     });
@@ -39,6 +39,9 @@ function handleBtnClicks() {
 // output = none, updated STORE
     function iHaveAllTheAnswers(questionObj) {
         let ansSelected = $('input[name=quizAns]:checked label').text();
+        if (ansSelected == "") {
+            
+        }
         console.log(ansSelected);
         let correctAns = questionObj.correct;
         checkAns(ansSelected, correctAns);
@@ -72,7 +75,10 @@ function handleBtnClicks() {
         }
 
         else if (btnClass === 'next') {
+            if (STORE.info.questionNum === 9) {
             STORE.info.currentView = 3;
+            }
+            else STORE.info.currentView = 2;
             return;
         }
 
@@ -95,7 +101,7 @@ function handleBtnClicks() {
 
 // A function which generates the view
 function generateView(newView) {
-    let currentQuestionNum = (STORE.info.questionNum - 1); // because I updated the number already at this point
+    let currentQuestionNum = (STORE.info.questionNum);
     let currentQuestion = STORE.questions[currentQuestionNum].question;
     let answerKey = STORE.questions[currentQuestionNum].answer;
     let correctAns = STORE.questions[currentQuestionNum].correct;
@@ -117,13 +123,15 @@ function generateView(newView) {
         `
         <div id="view1" role="QuestionPage">
             <div id="questionPanel">${currentQuestion}` // The question input from the correct object in the STORE goes here
-            + `</div>
+            + // jshint ignore:line
+            `</div> 
             <div id="ansPanel">`  // The answer array from the correct object in the STORE displays in the answer form here 
-            + `<form id='ansForm' action="" method="get"> 
-                    <input type="radio" name="quizAns" id="1stRadioAns" /><label for="1stRadioAns">${answerKey[0]}</label>
-                    <input type="radio" name="quizAns" id="2ndRadioAns" /><label for="2ndRadioAns">${answerKey[1]}</label>
-                    <input type="radio" name="quizAns" id="3rdRadioAns" /><label for="3rdRadioAns">${answerKey[2]}</label>
-                    <input type="radio" name="quizAns" id="4rdRadioAns" /><label for="4rdRadioAns">${answerKey[3]}</label>
+            + // jshint ignore:line
+            `<form id='ansForm' action="" method="get"> 
+                    <input type="radio" name="quizAns" id="1stRadioAns" checked='checked' class='cusRadio' /><label for="1stRadioAns">${answerKey[0]}</label>
+                    <input type="radio" name="quizAns" id="2ndRadioAns" class='cusRadio' /><label for="2ndRadioAns">${answerKey[1]}</label>
+                    <input type="radio" name="quizAns" id="3rdRadioAns" class='cusRadio' /><label for="3rdRadioAns">${answerKey[2]}</label>
+                    <input type="radio" name="quizAns" id="4rdRadioAns" class='cusRadio' /><label for="4rdRadioAns">${answerKey[3]}</label>
                 </form>
             </div>
             <button id="quizBtn" class='submit'>Submit</button>
@@ -133,20 +141,25 @@ function generateView(newView) {
         // View 2 for Response Page 
         `
         <div id="view2" role="ResponsePage">
-            ${isCorrect ? `
+            ${isCorrect ? 
+            `
             <div id="responsePanel">Correct!</div>
             <div id="correctAnsPanel">
-                <img src='https://www.google.com/search?q=thumbs+up&rlz=1C1CHBF_enUS842US842&source=lnms&tbm=isch&sa=X&ved=0ahUKEwjNue3K4rfhAhUFnKwKHeLsAkUQ_AUIDigB&biw=1707&bih=778&dpr=1.5#imgrc=RQajt-rDHysSWM:' alt='a thumbs up because you are right!'>`
-                : // ***
-                `
+                <img src='https://www.google.com/search?q=thumbs+up&rlz=1C1CHBF_enUS842US842&source=lnms&tbm=isch&sa=X&ved=0ahUKEwjNue3K4rfhAhUFnKwKHeLsAkUQ_AUIDigB&biw=1707&bih=778&dpr=1.5#imgrc=RQajt-rDHysSWM:' alt='a thumbs up because you are right!'>
+            </div>
+            `
+            : // ***
+            `
             <div id="responsePanel">Wrong!</div>
             <div id="correctAnsPanel">
                 <p>The correct answer is:</p>
-                <p id="correctAnsDisplay>${correctAns}</p>
+                <p id="correctAnsDisplay">${correctAns}</p>
+            </div>
             `}
             <div id='scoreDisplay'>
                 <p>Your current score is:</p>
-                <p id='currentScoreDisplay'>${totalCorrect} / ${(currentQuestionNum)}</p>
+                <p id='currentScoreDisplay'>${totalCorrect} / ${currentQuestionNum}</p>
+            </div>
             <button id="quizBtn" class='next'>Next</button>
         `,
 
