@@ -22,7 +22,7 @@ let STORE = {
 function handleBtnClicks() {
     let currentQuestionNum;
     let questionObj;
-    $('#renderThis').on('click', '#quizBtn', function () {
+    $('#render-this').on('click', '#quiz-button', function () {
         if (STORE.info.currentView === 1) { // so it doesn't run except on the question page
             currentQuestionNum = STORE.info.questionNum;
             questionObj = STORE.questions[currentQuestionNum];
@@ -38,10 +38,10 @@ function handleBtnClicks() {
 //      then cascades into checkAns() to update the STORE, increases the questionNum, then end s
 // output = none, updated STORE
     function iHaveAllTheAnswers(questionObj) {
-        let ansSelected = $('input[name=quizAns]:checked label').text();
-        if (ansSelected == "") {
+        let ansSelected = $('input:checked h3').text();
+        // if (ansSelected == "") {
             
-        }
+        // }
         console.log(ansSelected);
         let correctAns = questionObj.correct;
         checkAns(ansSelected, correctAns);
@@ -75,17 +75,15 @@ function handleBtnClicks() {
         }
 
         else if (btnClass === 'next') {
-            if (STORE.info.questionNum === 9) {
+            if (STORE.info.questionNum === 10) {
             STORE.info.currentView = 3;
             }
-            else STORE.info.currentView = 2;
+            else STORE.info.currentView = 1;
             return;
         }
 
         else if (btnClass === 'startAgain') {
-            STORE.info.currentView = 1;
-            STORE.info.questionNum = 0;
-            STORE.info.totalCorrect = 0;
+            setUpQuiz();
             return;
         }
         throw console.error('THE VIEW IS MESSED UP');
@@ -110,28 +108,25 @@ function generateView(newView) {
     let totalNumQuestions = STORE.info.totalNumQuestions;
     let view = [// View 0 for Landing Page
         `
-        <div id="view0" role="LandingPage">
-            <div id='welcomePicture'>
-                <img src="https://longdonclub.co.uk/wp/wp-content/uploads/2017/12/Quiz@Kvarteret-e1518802228786.png"
-                   alt="An image welcoming you to the quiz!">
-            </div>
-            <button id="quizBtn" class='startQ'>Start Quiz</button>
+        <div id="view0" class="col" role="LandingPage">
+            <img src="https://longdonclub.co.uk/wp/wp-content/uploads/2017/12/Quiz@Kvarteret-e1518802228786.png" alt="An image welcoming you to the quiz!">
+            <button id="quiz-button" class='startQ'>Start Quiz</button>
         </div>
          `,
 
         //  View 1 for Question Page
         `
-        <div id="view1" role="QuestionPage">
+        <div id="view1" class="view" role="QuestionPage">
             <div id="questionPanel">${currentQuestion}` // The question input from the correct object in the STORE goes here
             + // jshint ignore:line
             `</div> 
             <div id="ansPanel">`  // The answer array from the correct object in the STORE displays in the answer form here 
             + // jshint ignore:line
             `<form id='ansForm' action="" method="get"> 
-                    <input type="radio" name="quizAns" id="1stRadioAns" checked='checked' class='cusRadio' /><label for="1stRadioAns">${answerKey[0]}</label>
-                    <input type="radio" name="quizAns" id="2ndRadioAns" class='cusRadio' /><label for="2ndRadioAns">${answerKey[1]}</label>
-                    <input type="radio" name="quizAns" id="3rdRadioAns" class='cusRadio' /><label for="3rdRadioAns">${answerKey[2]}</label>
-                    <input type="radio" name="quizAns" id="4rdRadioAns" class='cusRadio' /><label for="4rdRadioAns">${answerKey[3]}</label>
+                    <input type="radio" name="quizAns" id="firstRadioAns" checked ><span>${answerKey[0]}</span>
+                    <input type="radio" name="quizAns" id="secondRadioAns" ><span>${answerKey[1]}</span>
+                    <input type="radio" name="quizAns" id="thirdRadioAns" ><span>${answerKey[2]}</span>
+                    <input type="radio" name="quizAns" id="fourthRadioAns" ><span>${answerKey[3]}</span>
                 </form>
             </div>
             <button id="quizBtn" class='submit'>Submit</button>
@@ -140,7 +135,7 @@ function generateView(newView) {
 
         // View 2 for Response Page 
         `
-        <div id="view2" role="ResponsePage">
+        <div id="view2" class="view" role="ResponsePage">
             ${isCorrect ? 
             `
             <div id="responsePanel">Correct!</div>
@@ -165,7 +160,7 @@ function generateView(newView) {
 
         // View 3 for Final Score Page 
         `
-        <div id="view3" role="FinalScorePage">
+        <div id="view3" class="view" role="FinalScorePage">
             <p>Your FINAL score is:</p>
             <p id='finalScoreDisplay'>${totalCorrect} / ${totalNumQuestions}</p>
         </div>
@@ -180,7 +175,7 @@ function renderView() {
     console.log('`renderView` ran');
     let newView = STORE.info.currentView;
     let viewString = generateView(newView);
-    $('#renderThis').html(viewString);
+    $('#render-this').html(viewString);
     }
 
 // A function that sets up the number of questions in STORE.info, also sets questionNum and currentView to 0 so it can load the landing page
@@ -188,6 +183,7 @@ function renderView() {
         STORE.info.totalNumQuestions = STORE.questions.length;
         STORE.info.questionNum = 0;
         STORE.info.currentView = 0;
+        STORE.info.totalCorrect = 0;
         return;
     }
 

@@ -11,24 +11,29 @@
 </head>
 
 <body>
-    <main id='content-container' role='main' class='container'>
+    <main id='content-container' role='main'>
         <!-- Header doesn't re-render -->
-        <header role='banner'> 
-            <h1>Pokemon Quiz!</h1> 
+        <header role='banner' class="row"> 
+            <h1>Simpsons Quiz!</h1> 
         </header>
         
-        <div class="row flexbox">
-            <div class="col col-12 col-8 col-6 col-4">
 
-                <div id='renderThis' class='container' role='js-quiz-container'>
-                <!--This is where the views will render-->
-                </div>
-
+        <div id='render-this' class='row' role='js-quiz-container'>
+            <!--This is where the views will render-->
+            <div id="view1" class="col" role="QuestionPage">
+                <h2>currentQuestion</h2> 
+                <form id='ans-form' class="col"> 
+                    <span class="row"><input type="radio" name="quizAns" id="firstRadioAns" checked ><h3>answerKey[0]</h3></span>
+                    <span class="row"><input type="radio" name="quizAns" id="secondRadioAns" ><h3>answerKey[1]</h3></span>
+                    <span class="row"><input type="radio" name="quizAns" id="thirdRadioAns" ><h3>answerKey[2]</h3></span>
+                    <span class="row"><input type="radio" name="quizAns" id="fourthRadioAns" ><h3>answerKey[3]</h3></span>
+                </form>
+                <button id="quiz-button" class='submit'>Submit</button>
             </div>
-        </div>  <!-- End of flexbox  -->
+        </div>
 
-        <script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
-        <script src="quizApp.js" type="text/javascript"></script>
+        <!-- <script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
+        <script src="quizApp.js" type="text/javascript"></script> -->
     </main>
 </body>
 
