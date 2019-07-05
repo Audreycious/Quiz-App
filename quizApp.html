@@ -20,15 +20,21 @@
 
         <div id='render-this' class='row' role='js-quiz-container'>
             <!--This is where the views will render-->
-            <div id="view1" class="col" role="QuestionPage">
-                <h2>currentQuestion</h2> 
-                <form id='ans-form' class="col"> 
-                    <span class="row"><input type="radio" name="quizAns" id="firstRadioAns" checked ><h3>answerKey[0]</h3></span>
-                    <span class="row"><input type="radio" name="quizAns" id="secondRadioAns" ><h3>answerKey[1]</h3></span>
-                    <span class="row"><input type="radio" name="quizAns" id="thirdRadioAns" ><h3>answerKey[2]</h3></span>
-                    <span class="row"><input type="radio" name="quizAns" id="fourthRadioAns" ><h3>answerKey[3]</h3></span>
-                </form>
-                <button id="quiz-button" class='submit'>Submit</button>
+            <div id="view2" class="view" role="ResponsePage">
+                <div id="responsePanel">Correct!</div>
+                <div id="correctAnsPanel">
+                    <img src='https://www.google.com/search?q=thumbs+up&rlz=1C1CHBF_enUS842US842&source=lnms&tbm=isch&sa=X&ved=0ahUKEwjNue3K4rfhAhUFnKwKHeLsAkUQ_AUIDigB&biw=1707&bih=778&dpr=1.5#imgrc=RQajt-rDHysSWM:' alt='a thumbs up because you are right!'>
+                </div>
+                <div id="responsePanel">Wrong!</div>
+                <div id="correctAnsPanel">
+                    <p>The correct answer is:</p>
+                    <p id="correctAnsDisplay">correctAns</p>
+                </div>
+                <div id='scoreDisplay'>
+                    <p>Your current score is:</p>
+                    <p id='currentScoreDisplay'>totalCorrect / currentQuestionNum</p>
+                </div>
+                <button id="quizBtn" class='next'>Next</button>
             </div>
         </div>
 
