@@ -137,30 +137,50 @@ function generateView(newView) {
         // </div>`
 
         // View 2 for Response Page 
-        `<div id="view2" class="view" role="ResponsePage">
+        `<div id="view2" class="col" role="ResponsePage">
             ${isCorrect ? `
-            <div id="responsePanel">Correct!</div>
+            <h2 id="responsePanel" class="correct">Correct!</h2>
             <div id="correctAnsPanel">
-                <img src='https://www.google.com/search?q=thumbs+up&rlz=1C1CHBF_enUS842US842&source=lnms&tbm=isch&sa=X&ved=0ahUKEwjNue3K4rfhAhUFnKwKHeLsAkUQ_AUIDigB&biw=1707&bih=778&dpr=1.5#imgrc=RQajt-rDHysSWM:' alt='a thumbs up because you are right!'>
+                <img src='https://cdn.shopify.com/s/files/1/1061/1924/products/Thumbs_Up_Sign_Emoji_Icon_ios10_large.png?v=1542435999' alt='a thumbs up because you are right!'>
             </div>`
-            : // ***
-            `<div id="responsePanel">Wrong!</div>
+            : // Ternary break here
+            `<h2 id="responsePanel" class="wrong">Wrong!</h2>
             <div id="correctAnsPanel">
                 <p>The correct answer is:</p>
-                <p id="correctAnsDisplay">${correctAns}</p>
+                <p id="correctAnsDisplay">correctAns</p>
             </div>`}
-            <div id='scoreDisplay'>
+            <div id='scoreDisplay' class="col">
                 <p>Your current score is:</p>
-                <p id='currentScoreDisplay'>${totalCorrect} / ${currentQuestionNum}</p>
+                <p id='currentScoreDisplay' class="col">totalCorrect / currentQuestionNum</p>
             </div>
-            <button id="quizBtn" class='next'>Next</button>`,
+            <button id="quiz-button" class='next'>Next</button>
+        </div>`    
+
+        // `<div id="view2" class="view" role="ResponsePage">
+        //     ${isCorrect ? `
+        //     <div id="responsePanel">Correct!</div>
+        //     <div id="correctAnsPanel">
+        //         <img src='https://www.google.com/search?q=thumbs+up&rlz=1C1CHBF_enUS842US842&source=lnms&tbm=isch&sa=X&ved=0ahUKEwjNue3K4rfhAhUFnKwKHeLsAkUQ_AUIDigB&biw=1707&bih=778&dpr=1.5#imgrc=RQajt-rDHysSWM:' alt='a thumbs up because you are right!'>
+        //     </div>`
+        //     : // ***
+        //     `<div id="responsePanel">Wrong!</div>
+        //     <div id="correctAnsPanel">
+        //         <p>The correct answer is:</p>
+        //         <p id="correctAnsDisplay">${correctAns}</p>
+        //     </div>`}
+        //     <div id='scoreDisplay'>
+        //         <p>Your current score is:</p>
+        //         <p id='currentScoreDisplay'>${totalCorrect} / ${currentQuestionNum}</p>
+        //     </div>
+        //     <button id="quiz-button" class='next'>Next</button>`
+        ,
 
         // View 3 for Final Score Page 
-        `<div id="view3" class="view" role="FinalScorePage">
+        `<div id="view3" class="col" role="FinalScorePage">
             <p>Your FINAL score is:</p>
             <p id='finalScoreDisplay'>${totalCorrect} / ${totalNumQuestions}</p>
         </div>
-        <button id="quizBtn" class='startAgain'>Start again?</button>
+        <button id="quiz-button" class='startAgain'>Start again?</button>
         `];
     console.log('`generateView` ran');
     return view[newView];
