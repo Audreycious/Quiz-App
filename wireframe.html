@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name='description' content='A quiz based on the TV show, The Simpsons'>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="wireframe.css">
+    <title>Simpsons Quiz!</title>
+</head>
+
+<body>
+    <main id='content-container' role='main'>
+        <!-- Header doesn't re-render -->
+        <header role='banner' class="row"> 
+            <h1>Simpsons Quiz!</h1> 
+        </header>
+        
+        <div id='render-this' class='row' role='js-quiz-container'>
+            <!--This is where the views will render-->
+            <!-- View 0, the home page -->
+            <div id="view0" class="col" role="LandingPage">
+                <img src="https://longdonclub.co.uk/wp/wp-content/uploads/2017/12/Quiz@Kvarteret-e1518802228786.png" alt="An image welcoming you to the quiz!">
+                <button id="quiz-button" class='startQ'>Start Quiz</button>
+            </div>
+        </div>
+        <div id='render-this' class='row' role='js-quiz-container'>
+            <!-- View 1 for Question Page -->
+            <div id="view1" class="col" role="QuestionPage">
+                <span>The Current Question / The Total Number of Questions</span>
+                <h2>The Current Question</h2> 
+                <form id='ans-form' class="col" action="" method="get"> 
+                    <div>
+                        <input type="radio" name="quizAns" id="firstRadioAns" checked /><span>The Current First Answer</span>
+                    </div>
+                    <div>
+                        <input type="radio" name="quizAns" id="secondRadioAns" /><span>The Current Second Answer</span>
+                    </div>
+                    <div>
+                        <input type="radio" name="quizAns" id="thirdRadioAns" /><span>The Current Third Answer</span>
+                    </div>
+                    <div>
+                        <input type="radio" name="quizAns" id="fourthRadioAns" /><span>The Current Fourth Answer</span>
+                    </div>
+                </form>
+                <button id="quiz-button" class='submit'>Submit</button>
+            </div>
+        </div>
+        <div id='render-this' class='row' role='js-quiz-container'>
+            <!-- View 2 for Response Page  -->
+            <div id="view2" class="col" role="ResponsePage">
+                <h2 id="responsePanel" class="correct">Correct!</h2>
+                <div id="correctAnsPanel">
+                    <img src='https://cdn.shopify.com/s/files/1/1061/1924/products/Thumbs_Up_Sign_Emoji_Icon_ios10_large.png?v=1542435999' alt='a thumbs up because you are right!'>
+                </div>
+                Or
+                <h2 id="responsePanel" class="wrong">Wrong!</h2>
+                <div id="correctAnsPanel">
+                    <p>The correct answer is:</p>
+                    <p id="correctAnsDisplay">The Correct Answer</p>
+                </div>
+                <div id='scoreDisplay' class="col">
+                    <p>Your current score is:</p>
+                    <p id='currentScoreDisplay' class="col">The Total Correct / The Current Question Number</p>
+                </div>
+                <button id="quiz-button" class='next'>Next</button>
+            </div>
+        </div>
+        <div id='render-this' class='row' role='js-quiz-container'>
+            <!-- View 3 for Final Score Page  -->
+            <div id="view3" class="col" role="FinalScorePage">
+                <p>THE END!</p>
+                <p>Your FINAL score is:</p>
+                <p id='finalScoreDisplay' class="col">The Total Correct / The Total Number of Questions</p>
+            </div>
+            <button id="quiz-button" class='startAgain'>Start again?</button>
+        </div>
+
+    </main>
+</body>
+
+</html>
