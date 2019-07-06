@@ -3,16 +3,16 @@ let STORE = {
     info: { currentView: Number, questionNum: Number, currentCorrectAns: '', isCorrect: false, totalCorrect: 0, totalNumQuestions: Number},
     
     questions: [
-        { question: '1. In which town do the Simpsons reside?', answer: ['Springfield', 'Shelbyville', 'Seinfeld', 'Sunville'], correct: 'Springfield' },
-        { question: '2. What is the name of the Simpsons\' next door neighbor?', answer: ['Barney Gumble', 'Ned Flanders', 'Principal Skinner', 'Edna Crabapple'], correct: 'Ned Flanders' },
-        { question: '3. Who founded the Simpsons\' town?', answer: ['Jebadiah Springfield', 'Zachariah Springfield', 'Springfield Manhattan', 'Bart Simpson'], correct: 'Jebadiah Springfield' },
-        { question: 'How old is Bart Simpson?', answer: ['9', '10', '11', '12'], correct: '10' },
-        { question: 'What is the name of the clown on Channel 6?', answer: ['Gabbo', 'Krusty', 'Bonko', 'Bozo'], correct: 'Krusty' },
-        { question: 'What is the name of Lisa Simpsons\' jazz mentor?', answer: ['Billy Jazzman', 'Blind Willy Witherspoon', 'Bleeding Gums Murphy', 'Frank Grimes'], correct: 'Bleeding Gums Murphy' },
-        { question: 'Who is Mr. Burns\' assistant?', answer: ['Mary Schmidts', 'Seymour Skinner', 'Barnard Gumble', 'Waylon Smithers'], correct: 'Waylon Smithers' },
-        { question: 'What is the name of the bar where Homer drinks?', answer: ['Duff Brewery', 'Moe\'s Tavern', 'Cheers', 'The Drink Hole'], correct: 'Moe\'s Tavern' },
-        { question: 'What did the Simpsons\' get for their first Christmas?', answer: ['A cat', 'A hamster', 'A ferret', 'A dog'], correct: 'A dog' },
-        { question: 'Who runs the Kwik-E-Mart?', answer: ['Moe', 'Apu', 'Chief Wiggum', 'Mr. Burns'], correct: 'Apu' }],
+        { num: 0, question: '1. In which town do the Simpsons reside?', answer: ['Springfield', 'Shelbyville', 'Seinfeld', 'Sunville'], correct: 'Springfield' },
+        { num: 1, question: '2. What is the name of the Simpsons\' next door neighbor?', answer: ['Barney Gumble', 'Ned Flanders', 'Principal Skinner', 'Edna Crabapple'], correct: 'Ned Flanders' },
+        { num: 2, question: '3. Who founded the Simpsons\' town?', answer: ['Jebadiah Springfield', 'Zachariah Springfield', 'Springfield Manhattan', 'Bart Simpson'], correct: 'Jebadiah Springfield' },
+        { num: 3, question: 'How old is Bart Simpson?', answer: ['9', '10', '11', '12'], correct: '10' },
+        { num: 4, question: 'What is the name of the clown on Channel 6?', answer: ['Gabbo', 'Krusty', 'Bonko', 'Bozo'], correct: 'Krusty' },
+        { num: 5, question: 'What is the name of Lisa Simpsons\' jazz mentor?', answer: ['Billy Jazzman', 'Blind Willy Witherspoon', 'Bleeding Gums Murphy', 'Frank Grimes'], correct: 'Bleeding Gums Murphy' },
+        { num: 6, question: 'Who is Mr. Burns\' assistant?', answer: ['Mary Schmidts', 'Seymour Skinner', 'Barnard Gumble', 'Waylon Smithers'], correct: 'Waylon Smithers' },
+        { num: 7, question: 'What is the name of the bar where Homer drinks?', answer: ['Duff Brewery', 'Moe\'s Tavern', 'Cheers', 'The Drink Hole'], correct: 'Moe\'s Tavern' },
+        { num: 8, question: 'What did the Simpsons\' get for their first Christmas?', answer: ['A cat', 'A hamster', 'A ferret', 'A dog'], correct: 'A dog' },
+        { num: 9, question: 'Who runs the Kwik-E-Mart?', answer: ['Moe', 'Apu', 'Chief Wiggum', 'Mr. Burns'], correct: 'Apu' }],
     
     }; // End of STORE
   
@@ -21,7 +21,6 @@ let STORE = {
 // event delegator
 function handleBtnClicks() {
     let currentQuestionNum;
-    let questionObj;
     $('#render-this').on('click', '#quiz-button', function () {
         if (STORE.info.currentView === 1) { // so it doesn't run except on the question page
             currentQuestionNum = STORE.info.questionNum;
@@ -30,7 +29,7 @@ function handleBtnClicks() {
         }
         let btnClass = $(this).attr('class');
         decideView(btnClass);
-        renderView();
+        renderView(questionObj);
     });
 }
 
@@ -38,11 +37,15 @@ function handleBtnClicks() {
 //      then cascades into checkAns() to update the STORE, increases the questionNum, then end s
 // output = none, updated STORE
     function iHaveAllTheAnswers(questionObj) {
-        let ansSelected = $('input:checked h3').text();
-        // if (ansSelected == "") {
-            
-        // }
+        let ansSelected = $('input:checked');
         console.log(ansSelected);
+        // .checked.children('span').val();
+        // console.log(questionObj.correct);
+        // console.log(questionObj.answer[0]);
+        // console.log(questionObj.answer[1]);        
+        // console.log(questionObj.answer[2]);
+        // console.log(questionObj.answer[3]);
+        // console.log(ansSelected);
         let correctAns = questionObj.correct;
         checkAns(ansSelected, correctAns);
         STORE.info.questionNum++; 
@@ -98,14 +101,21 @@ function handleBtnClicks() {
 // }
 
 // A function which generates the view
-function generateView(newView) {
-    let currentQuestionNum = (STORE.info.questionNum);
-    let currentQuestion = STORE.questions[currentQuestionNum].question;
-    let answerKey = STORE.questions[currentQuestionNum].answer;
-    let correctAns = STORE.questions[currentQuestionNum].correct;
+function generateView(newView, questionObj) {
+    let masterQuestionVar = {num: 0, question: "", answer: [], correct: "" };
+    if (STORE.questionNum !== 0){
+        masterQuestionVar = questionObj;
+    }
     let isCorrect = STORE.info.isCorrect;
     let totalCorrect = STORE.info.totalCorrect;
     let totalNumQuestions = STORE.info.totalNumQuestions;
+    if (newView === 1) {
+        console.log(questionObj.answer);
+        console.log(questionObj.correct);
+        console.log(isCorrect);
+        console.log(questionObj.question);
+        console.log(questionObj.num);
+    }
     let view = [// View 0 for Landing Page
         `<div id="view0" class="col" role="LandingPage">
             <img src="https://longdonclub.co.uk/wp/wp-content/uploads/2017/12/Quiz@Kvarteret-e1518802228786.png" alt="An image welcoming you to the quiz!">
@@ -114,27 +124,23 @@ function generateView(newView) {
 
         //  View 1 for Question Page
         `<div id="view1" class="col" role="QuestionPage">
-            <h2>currentQuestion</h2> 
-            <form id='ans-form' class="col"> 
-                <span class="row"><input type="radio" name="quizAns" id="firstRadioAns" checked ><h3>answerKey[0]</h3></span>
-                <span class="row"><input type="radio" name="quizAns" id="secondRadioAns" ><h3>answerKey[1]</h3></span>
-                <span class="row"><input type="radio" name="quizAns" id="thirdRadioAns" ><h3>answerKey[2]</h3></span>
-                <span class="row"><input type="radio" name="quizAns" id="fourthRadioAns" ><h3>answerKey[3]</h3></span>
-            </form>
-            <button id="quiz-button" class='submit'>Submit</button>
+            `// <h2>${masterQuestionVar.question}</h2> 
+            // <form id='ans-form' class="col" action="" method="get"> 
+            //     <div>
+            //         <input type="radio" name="quizAns" id="firstRadioAns" checked /><span>${masterQuestionVar.answer[0]}</span>
+            //     </div>
+            //     <div>
+            //         <input type="radio" name="quizAns" id="secondRadioAns" /><span>${masterQuestionVar.answer[1]}</span>
+            //     </div>
+            //     <div>
+            //         <input type="radio" name="quizAns" id="thirdRadioAns" /><span>${masterQuestionVar.answer[2]}</span>
+            //     </div>
+            //     <div>
+            //         <input type="radio" name="quizAns" id="fourthRadioAns" /><span>${masterQuestionVar.answer[3]}</span>
+            //     </div>
+            // </form>
+            `<button id="quiz-button" class='submit'>Submit</button>
         </div>`,
-        // <div id="view1" class="view" role="QuestionPage">
-        //     <div id="questionPanel">${currentQuestion}</div> 
-        //     <div id="ansPanel">
-        //         <form id='ansForm' action="" method="get"> 
-        //             <input type="radio" name="quizAns" id="firstRadioAns" checked ><span>${answerKey[0]}</span>
-        //             <input type="radio" name="quizAns" id="secondRadioAns" ><span>${answerKey[1]}</span>
-        //             <input type="radio" name="quizAns" id="thirdRadioAns" ><span>${answerKey[2]}</span>
-        //             <input type="radio" name="quizAns" id="fourthRadioAns" ><span>${answerKey[3]}</span>
-        //         </form>
-        //     </div>
-        //     <button id="quizBtn" class='submit'>Submit</button>
-        // </div>`
 
         // View 2 for Response Page 
         `<div id="view2" class="col" role="ResponsePage">
@@ -147,38 +153,19 @@ function generateView(newView) {
             `<h2 id="responsePanel" class="wrong">Wrong!</h2>
             <div id="correctAnsPanel">
                 <p>The correct answer is:</p>
-                <p id="correctAnsDisplay">correctAns</p>
+                <p id="correctAnsDisplay">${masterQuestionVar.correct}</p>
             </div>`}
             <div id='scoreDisplay' class="col">
                 <p>Your current score is:</p>
-                <p id='currentScoreDisplay' class="col">totalCorrect / currentQuestionNum</p>
+                <p id='currentScoreDisplay' class="col">${totalCorrect} / ${masterQuestionVar.num}</p>
             </div>
             <button id="quiz-button" class='next'>Next</button>
-        </div>`    
-
-        // `<div id="view2" class="view" role="ResponsePage">
-        //     ${isCorrect ? `
-        //     <div id="responsePanel">Correct!</div>
-        //     <div id="correctAnsPanel">
-        //         <img src='https://www.google.com/search?q=thumbs+up&rlz=1C1CHBF_enUS842US842&source=lnms&tbm=isch&sa=X&ved=0ahUKEwjNue3K4rfhAhUFnKwKHeLsAkUQ_AUIDigB&biw=1707&bih=778&dpr=1.5#imgrc=RQajt-rDHysSWM:' alt='a thumbs up because you are right!'>
-        //     </div>`
-        //     : // ***
-        //     `<div id="responsePanel">Wrong!</div>
-        //     <div id="correctAnsPanel">
-        //         <p>The correct answer is:</p>
-        //         <p id="correctAnsDisplay">${correctAns}</p>
-        //     </div>`}
-        //     <div id='scoreDisplay'>
-        //         <p>Your current score is:</p>
-        //         <p id='currentScoreDisplay'>${totalCorrect} / ${currentQuestionNum}</p>
-        //     </div>
-        //     <button id="quiz-button" class='next'>Next</button>`
-        ,
+        </div>`,
 
         // View 3 for Final Score Page 
         `<div id="view3" class="col" role="FinalScorePage">
             <p>Your FINAL score is:</p>
-            <p id='finalScoreDisplay'>${totalCorrect} / ${totalNumQuestions}</p>
+            <p id='finalScoreDisplay' class="col">${totalCorrect} / ${totalNumQuestions}</p>
         </div>
         <button id="quiz-button" class='startAgain'>Start again?</button>
         `];

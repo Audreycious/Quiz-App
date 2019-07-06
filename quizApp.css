@@ -12,12 +12,14 @@ html, body {
     display: flex;
     justify-content: center;
     align-items: center;
+    /* new margin */
+    margin: .1em; 
 }
 
 .col {
     flex-direction: column;
     width: 100%;
-    padding: 10px 40px;
+    /* padding: 10px 40px; */
 }
 
 header {
@@ -60,11 +62,16 @@ img {
     margin: 1.5%;
 }
 
-#ans-form span {
-    justify-content: flex-start;
+form div {
+    align-items: center;
 }
 
-#ans-form input {
+/* span {
+    display: inline-block;
+} */
+
+input {
+    /* display: inline-block; */
     height: 25px;
     width: 25px;
     background-color: rgba(0, 47, 255, 0.794);
