@@ -1,3 +1,19 @@
+
+const STORE = {
+    questionNum: 0,
+    questions: [
+        { num: 0, question: '1. In which town do the Simpsons reside?', answer: ['Springfield', 'Shelbyville', 'Seinfeld', 'Sunville'], correct: 'Springfield' },
+        { num: 1, question: '2. What is the name of the Simpsons\' next door neighbor?', answer: ['Barney Gumble', 'Ned Flanders', 'Principal Skinner', 'Edna Crabapple'], correct: 'Ned Flanders' },
+        { num: 2, question: '3. Who founded the Simpsons\' town?', answer: ['Jebadiah Springfield', 'Zachariah Springfield', 'Springfield Manhattan', 'Bart Simpson'], correct: 'Jebadiah Springfield' },
+        { num: 3, question: 'How old is Bart Simpson?', answer: ['9', '10', '11', '12'], correct: '10' },
+        { num: 4, question: 'What is the name of the clown on Channel 6?', answer: ['Gabbo', 'Krusty', 'Bonko', 'Bozo'], correct: 'Krusty' },
+        { num: 5, question: 'What is the name of Lisa Simpsons\' jazz mentor?', answer: ['Billy Jazzman', 'Blind Willy Witherspoon', 'Bleeding Gums Murphy', 'Frank Grimes'], correct: 'Bleeding Gums Murphy' },
+        { num: 6, question: 'Who is Mr. Burns\' assistant?', answer: ['Mary Schmidts', 'Seymour Skinner', 'Barnard Gumble', 'Waylon Smithers'], correct: 'Waylon Smithers' },
+        { num: 7, question: 'What is the name of the bar where Homer drinks?', answer: ['Duff Brewery', 'Moe\'s Tavern', 'Cheers', 'The Drink Hole'], correct: 'Moe\'s Tavern' },
+        { num: 8, question: 'What did the Simpsons\' get for their first Christmas?', answer: ['A cat', 'A hamster', 'A ferret', 'A dog'], correct: 'A dog' },
+        { num: 9, question: 'Who runs the Kwik-E-Mart?', answer: ['Moe', 'Apu', 'Chief Wiggum', 'Mr. Burns'], correct: 'Apu' }],
+}
+
 // The starting screen should have a button that users can click to start the quiz.
 function handleBtnClicks(params) {
     $("target the render area").on("click", "target the button", function(params) {
@@ -7,9 +23,17 @@ function handleBtnClicks(params) {
 
 // Users should be prompted through a series of at least 10 multiple choice questions that they can answer.
 function handleQuestions(params) {
-    // Check the current question and grab the question information
-    // Check if the current answer selected is equal to the correct answer in the question information
-    // Change the view based on if it's correct or wrong
+    let questionNum = STORE.questionNum;
+    let questionInfo = STORE.questions[questionNum];
+    let correctRadio = STORE.questions[questionNum].correct;
+    let currentRadio = $('input[name="quizRadio"]:checked').val();
+    // Check if the current radio selected is equal to the correct radio in the question information
+    function checkAns(currentRadio, correctRadio) {
+        return currentRadio === correctRadio;
+    }
+    let correctChecker = checkAns(currentRadio, correctRadio);
+
+    // Return information to change the view based on if it's correct or wrong, the current question object, and other info
 }
 
 // Users should be asked questions 1 after the other.
