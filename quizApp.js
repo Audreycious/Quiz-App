@@ -117,29 +117,29 @@ function generateView(newView, questionObj) {
         console.log(questionObj.num);
     }
     let view = [// View 0 for Landing Page
-        `<div id="view0" class="col" role="LandingPage">
+        `<div id="start-quiz" class="col" role="LandingPage">
             <img src="https://longdonclub.co.uk/wp/wp-content/uploads/2017/12/Quiz@Kvarteret-e1518802228786.png" alt="An image welcoming you to the quiz!">
             <button id="quiz-button" class='startQ'>Start Quiz</button>
         </div>`,
 
         //  View 1 for Question Page
-        `<div id="view1" class="col" role="QuestionPage">
-            `// <h2>${masterQuestionVar.question}</h2> 
-            // <form id='ans-form' class="col" action="" method="get"> 
-            //     <div>
-            //         <input type="radio" name="quizAns" id="firstRadioAns" checked /><span>${masterQuestionVar.answer[0]}</span>
-            //     </div>
-            //     <div>
-            //         <input type="radio" name="quizAns" id="secondRadioAns" /><span>${masterQuestionVar.answer[1]}</span>
-            //     </div>
-            //     <div>
-            //         <input type="radio" name="quizAns" id="thirdRadioAns" /><span>${masterQuestionVar.answer[2]}</span>
-            //     </div>
-            //     <div>
-            //         <input type="radio" name="quizAns" id="fourthRadioAns" /><span>${masterQuestionVar.answer[3]}</span>
-            //     </div>
-            // </form>
-            `<button id="quiz-button" class='submit'>Submit</button>
+        `<div id="question-page" class="col" role="QuestionPage">
+            <h2>${masterQuestionVar.question}</h2> 
+            <form id='ans-form' class="col" > 
+                <div>
+                    <label><input type="radio" name="quizRadio" value="0" checked />${masterQuestionVar.answer[0]}</span>
+                </div>
+                <div>
+                    <input type="radio" name="quizRadio" id="secondRadioAns" /><span>${masterQuestionVar.answer[1]}</span>
+                </div>
+                <div>
+                    <input type="radio" name="quizRadio" />${masterQuestionVar.answer[2]}</span>
+                </div>
+                <div>
+                    <input type="radio" name="quizRadio" id="fourthRadioAns" /><span>${masterQuestionVar.answer[3]}</span>
+                </div>
+            </form>
+            <button id="quiz-button" class='submit'>Submit</button>
         </div>`,
 
         // View 2 for Response Page 
