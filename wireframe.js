@@ -101,18 +101,19 @@ function handleViews() {
                 <button id="quiz-button" type="button" >Submit</button>
             </div>
         `;
-        // Check if the current radio selected is equal to the correct radio in the question information
-        let correctRadio = questionObject.correct;
-        let currentRadio = $('input[name="quiz-radio"]:checked').val();
-        console.log(currentRadio);
-        STORE.lastSelection = currentRadio;
-        handleAnswers(correctRadio, currentRadio);
     }
 
     // Upon submitting an answer, users should:
         // receive textual feedback about their answer. If they were incorrect, they should be told the correct answer.
         // be moved onto the next question (or interact with an element to move on).
     else if (nextView === "results-page") {
+        // Check if the current radio selected is equal to the correct radio in the question information
+        let correctRadio = questionObject.correct;
+        let currentRadio = $('input[name="quiz-radio"]:checked').val();
+        console.log(currentRadio);
+        STORE.lastSelection = currentRadio;
+        handleAnswers(correctRadio, currentRadio);
+
         if (STORE.wasLastCorrect) { 
             STORE.currentViewString = `
                 <div id="results-page" class="col" role="ResponsePage">
@@ -144,6 +145,7 @@ function handleViews() {
                 </div>
             `;
         }
+        STORE.questionNum++;
     }
     else if (nextView === "ending-page") {
         // Users should be shown their overall score at the end of the quiz. In other words, how many questions they got right out of the total questions asked.
