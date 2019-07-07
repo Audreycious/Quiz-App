@@ -34,7 +34,9 @@ h1 {
 #render-this {
     margin: 15% auto;
     width: 40%;
+    min-width: 400px;
     height: 50%;
+    min-height: 500px;
     border: 1px solid grey;
 }
 

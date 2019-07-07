@@ -14,7 +14,7 @@ const STORE = {
         { num: 2, question: '3. Who founded the Simpsons\' town?', answer: ['Jebadiah Springfield', 'Zachariah Springfield', 'Springfield Manhattan', 'Bart Simpson'], correct: 0 },
         { num: 3, question: 'How old is Bart Simpson?', answer: ['9', '10', '11', '12'], correct: 1 },
         { num: 4, question: 'What is the name of the clown on Channel 6?', answer: ['Gabbo', 'Krusty', 'Bonko', 'Bozo'], correct: 1 },
-        { num: 5, question: 'What is the name of Lisa Simpsons\' jazz mentor?', answer: ['Billy Jazzman', 'Blind Willy Witherspoon', 'Bleeding Gums Murphy', 'Frank Grimes'], correct: 3 },
+        { num: 5, question: 'What is the name of Lisa Simpsons\' jazz mentor?', answer: ['Billy Jazzman', 'Blind Willy Witherspoon', 'Bleeding Gums Murphy', 'Frank Grimes'], correct: 2 },
         { num: 6, question: 'Who is Mr. Burns\' assistant?', answer: ['Mary Schmidts', 'Seymour Skinner', 'Barnard Gumble', 'Waylon Smithers'], correct: 3 },
         { num: 7, question: 'What is the name of the bar where Homer drinks?', answer: ['Duff Brewery', 'Moe\'s Tavern', 'Cheers', 'The Drink Hole'], correct: 1 },
         { num: 8, question: 'What did the Simpsons\' get for their first Christmas?', answer: ['A cat', 'A hamster', 'A ferret', 'A dog'], correct: 3 },
@@ -22,7 +22,7 @@ const STORE = {
 };
 
 function handleBtnClicks() {
-    $("#quiz-button").on("click", function() {
+    $("#render-this").on("click", '#quiz-button', function() {
         // The starting screen should have a button that users can click to start the quiz.
         decideView();
 
@@ -65,9 +65,13 @@ function decideView() {
 function handleViews() {
     let nextView = STORE.currentView;
     let questionNum = STORE.questionNum;
-    let questionObject = STORE.questions[questionNum];
-    STORE.lastQuestion = questionObject;
-    STORE.lastCorrect = questionObject.answer[questionObject.correct];
+    let questionObject;
+    if (questionNum <= 9) {
+        questionObject = STORE.questions[questionNum];
+        STORE.lastQuestion = questionObject;
+        STORE.lastCorrect = questionObject.answer[questionObject.correct];
+    }
+
     if (nextView === "start-quiz") {
         // Users should be able to start a new quiz.
         STORE.currentViewString = `
@@ -111,9 +115,10 @@ function handleViews() {
         let correctRadio = questionObject.correct;
         let currentRadio = $('input[name="quiz-radio"]:checked').val();
         console.log(currentRadio);
+        console.log(questionObject);
         STORE.lastSelection = currentRadio;
         handleAnswers(correctRadio, currentRadio);
-
+        console.log(STORE.wasLastCorrect);
         if (STORE.wasLastCorrect) { 
             STORE.currentViewString = `
                 <div id="results-page" class="col" role="ResponsePage">
@@ -123,7 +128,7 @@ function handleViews() {
                     </div>
                     <div id='scoreDisplay' class="col">
                         <p>Your current score is:</p>
-                        <p id='currentScoreDisplay' class="col">${STORE.totalCorrect} / ${questionObject.num}</p>
+                        <p id='currentScoreDisplay' class="col">${STORE.totalCorrect} / ${questionObject.num + 1}</p>
                     </div>
                     <button id="quiz-button" type="button" >Next</button>
                 </div>
@@ -135,11 +140,11 @@ function handleViews() {
                     <h2 id="responsePanel" class="wrong">Wrong!</h2>
                     <div id="correctAnsPanel">
                         <p>The correct answer is:</p>
-                        <p id="correctAnsDisplay">${questionObject.correct}</p>
+                        <p id="correctAnsDisplay">${questionObject.answer[questionObject.correct]}</p>
                     </div>
                     <div id='scoreDisplay' class="col">
                         <p>Your current score is:</p>
-                        <p id='currentScoreDisplay' class="col">${STORE.totalCorrect} / ${questionObject.num}</p>
+                        <p id='currentScoreDisplay' class="col">${STORE.totalCorrect} / ${questionObject.num + 1}</p>
                     </div>
                     <button id="quiz-button" type="button" >Next</button>
                 </div>
@@ -169,6 +174,8 @@ function renderView() {
 }
 
 function handleAnswers(correctRadio, currentRadio) {
+    correctRadio = parseInt(correctRadio, 10);
+    currentRadio = parseInt(currentRadio, 10);
     if (correctRadio === currentRadio) {
         STORE.wasLastCorrect = true;
         STORE.totalCorrect++;
