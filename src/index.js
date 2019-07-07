@@ -167,7 +167,6 @@ function handleViews() {
     return;
 }
 
-// A function that renders the views
 function renderView() {
     console.log('`renderView` ran');
     $('#render-this').html(STORE.currentViewString);
