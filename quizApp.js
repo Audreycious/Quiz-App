@@ -159,7 +159,7 @@ function generateView(newView, questionObj) {
                 <p>Your current score is:</p>
                 <p id='currentScoreDisplay' class="col">${totalCorrect} / ${masterQuestionVar.num}</p>
             </div>
-            <button id="quiz-button" class='next'>Next</button>
+            <button id="quiz-button" type="button" >Next</button>
         </div>`,
 
         // View 3 for Final Score Page 
@@ -167,7 +167,7 @@ function generateView(newView, questionObj) {
             <p>Your FINAL score is:</p>
             <p id='finalScoreDisplay' class="col">${totalCorrect} / ${totalNumQuestions}</p>
         </div>
-        <button id="quiz-button" class='startAgain'>Start again?</button>
+        <button id="quiz-button" type="button" >Start again?</button>
         `];
     console.log('`generateView` ran');
     return view[newView];
