@@ -160,7 +160,7 @@ function handleViews() {
 }
 
 function renderView() {
-    console.log('`renderView` ran');
+    // console.log('`renderView` ran');
     $('#render-this').html(STORE.currentViewString);
 }
 
@@ -177,3 +177,4 @@ function handleAnswers(correctRadio, currentRadio) {
 }
 
 handleBtnClicks();
+// Thanks for reviewing this :)
