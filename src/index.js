@@ -86,21 +86,13 @@ function handleViews() {
         // Users should be prompted through a series of at least 10 multiple choice questions that they can answer.
         STORE.currentViewString = `
             <div id="question-page" class="col" role="QuestionPage">
-                <p>Question #${questionObject.num + 1}</p>
+                <h3>Question #${questionObject.num + 1}</h3>
                 <h2>${questionObject.question}</h2> 
-                <form id='ans-form' class="col" > 
-                    <div>
-                        <label><input type="radio" name="quiz-radio" value="0" checked >${questionObject.answer[0]}</label>
-                    </div>
-                    <div>
-                        <label><input type="radio" name="quiz-radio" value="1" >${questionObject.answer[1]}</label>
-                    </div>
-                    <div>
-                        <label><input type="radio" name="quiz-radio" value="2" >${questionObject.answer[2]}</label>
-                    </div>
-                    <div>
-                        <label><input type="radio" name="quiz-radio" value="3">${questionObject.answer[3]}</label>
-                    </div>
+                <form id='ans-form' role='answer-form' class="col" > 
+                    <label><input type="radio" name="quiz-radio" value="0" checked >${questionObject.answer[0]}</label>
+                    <label><input type="radio" name="quiz-radio" value="1" >${questionObject.answer[1]}</label>
+                    <label><input type="radio" name="quiz-radio" value="2" >${questionObject.answer[2]}</label>
+                    <label><input type="radio" name="quiz-radio" value="3">${questionObject.answer[3]}</label>
                 </form>
                 <button id="quiz-button" type="button" >Submit</button>
             </div>
@@ -155,8 +147,8 @@ function handleViews() {
     else if (nextView === "ending-page") {
         // Users should be shown their overall score at the end of the quiz. In other words, how many questions they got right out of the total questions asked.
         STORE.currentViewString = `
-            <div id="view3" class="col" role="FinalScorePage">
-                <div id="correctAnsPanel">
+            <div id="ending-page" class="col" role="FinalScorePage">
+                <div id="final-score-panel">
                     <p>Your FINAL score is:</p>
                     <p id='finalScoreDisplay' class="col">${STORE.totalCorrect} / 10</p>
                 </div>
@@ -173,6 +165,7 @@ function renderView() {
 }
 
 function handleAnswers(correctRadio, currentRadio) {
+    // Need to change strings into numbers to compare
     correctRadio = parseInt(correctRadio, 10);
     currentRadio = parseInt(currentRadio, 10);
     if (correctRadio === currentRadio) {
